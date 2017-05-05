@@ -54,6 +54,20 @@
             <input type="number" name="field4" value="0" />
         </form>
 
+        <form id="test6">
+            <input type="number" name="field1" value="1" />
+            <input type="number" name="field2" value="7" />
+            <input type="number" name="field3" value="2" disabled />
+            <input type="number" name="field4" value="0" />
+        </form>
+
+        <form id="test7">
+            <input type="hidden" name="field1" value="1" data-type="number" />
+            <input type="hidden" name="field2" value="1/1/2017 12:00 AM" data-type="date" />
+            <input type="hidden" name="field3" value="text" />
+            <input type="hidden" name="field4" value="text2" data-type="" />
+        </form>
+
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js"></script>
         <script type="text/javascript" src="../src/js/jquery.formify.js"></script>
         <script type="text/javascript">
@@ -70,6 +84,10 @@
                 console.log($('#test5').formify({
                     ignoreEmpty: true
                 }));
+                console.log('test 6');
+                console.log($('#test6').formify());
+                console.log('test 7');
+                console.log($('#test7').formify());
             });
         </script>
     </body>

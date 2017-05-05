@@ -50,9 +50,10 @@
         var pairs = [];
         _stack.each(function () {
             var element = $(this),
-                type = element.attr('type') || this.tagName.toLowerCase(),
+                type = element.attr('data-type') || element.attr('type') || this.tagName,
                 value = element.val();
             if (type) {
+                type = type.toLowerCase();
                 if (this.name) {
                     pairs.push({
                         name: this.name,

@@ -34,34 +34,35 @@
         var _options = $.extend({}, $.fn.formify.defaults, options),
             _stack = this.find(_options.targets || '');
 
-        function _parse(value, type) {
-            switch (type) {
-                case 'number':
-                case 'range':
-                    return parseInt(value, 10);
-                case 'date':
-                case 'datetime':
-                case 'datetime-local':
-                    return (new Date(value));
-                default: return value;
-            }
-        }
-
         var pairs = [];
         _stack.each(function () {
-            if (this.name) {
-                var element = $(this),
-                    type = element.attr('type') || this.tagName.toLowerCase(),
-                    value = element.val();
-                pairs.push({
-                    name: this.name,
-                    value: (type === 'checkbox') ? this.checked : value,
-                    type: type
-                });
+            var element = $(this),
+                type = element.attr('type') || this.tagName.toLowerCase(),
+                value = element.val();
+            if (type) {
+                if (this.name) {
+                    pairs.push({
+                        name: this.name,
+                        value: (type === 'checkbox') ? this.checked : value,
+                        type: type,
+                        element: this
+                    });
+                }
+                else {
+                    console.error('Element does not have a name defined: ', this);
+                }
             }
             else {
-                console.error('Element does not have a name defined: ', this);
+                console.error('Element type is invalid: ', this);
             }
+        });
+
+        pairs = pairs.filter(function (pair) {
+            if (_options.ignoreEmpty && !pair.value.length) {
+                return false;
+            }
+
+            return _options.filter(pair.value, pair.name, pair.element);
         });
 
         var result = {};
@@ -75,7 +76,7 @@
             for (var i = 0; i < route.length; i++) {
                 var key = route[i];
                 if (i >= route.length - 1) {
-                    context[key] = _parse(pair.value, pair.type);
+                    context[key] = _options.parser(pair.value, pair.type, pair.name);
                 }
                 else {
                     if (context[key] === undefined) {
@@ -91,6 +92,24 @@
     };
 
     $.fn.formify.defaults = {
-        targets: 'input, select'
+        targets: 'input, select',
+
+        ignoreEmpty: false,
+
+        filter: function (type, name, element) {
+            return type !== 'button';
+        },
+        parser: function (value, type, name) {
+            switch (type) {
+                case 'number':
+                case 'range':
+                    return parseInt(value, 10);
+                case 'date':
+                case 'datetime':
+                case 'datetime-local':
+                    return (new Date(value));
+                default: return value;
+            }
+        }
     };
 } ($));

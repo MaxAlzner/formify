@@ -47,6 +47,13 @@
             <input type="text" name="complex[2][field1]" value="field1_test" />
         </form>
 
+        <form id="test5">
+            <input type="text" name="field1" value="asdf" />
+            <input type="text" name="field2" value="" />
+            <input type="number" name="field3" value="2" />
+            <input type="number" name="field4" value="0" />
+        </form>
+
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js"></script>
         <script type="text/javascript" src="../src/js/jquery.formify.js"></script>
         <script type="text/javascript">
@@ -59,6 +66,10 @@
                 console.log($('#test3').formify());
                 console.log('test 4');
                 console.log($('#test4').formify());
+                console.log('test 5');
+                console.log($('#test5').formify({
+                    ignoreEmpty: true
+                }));
             });
         </script>
     </body>

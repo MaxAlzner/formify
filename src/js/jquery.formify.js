@@ -50,7 +50,7 @@
         var pairs = [];
         _stack.each(function () {
             var element = $(this),
-                type = element.attr('data-type') || element.attr('type') || this.tagName,
+                type = element.attr('data-formify-type') || element.attr('type') || this.tagName,
                 value = element.val();
             if (type) {
                 type = type.toLowerCase();

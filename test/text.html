@@ -1,0 +1,65 @@
+<html>
+    <head></head>
+    <body>
+
+        <form id="test1">
+            <input type="text" name="field1" value="field1_test" />
+            <input type="text" name="field2" value="field2_test" />
+            <input type="number" name="field3" value="2" />
+            <input type="date" name="field4" value="1/1/2017 12:00 AM" />
+            <input type="email" name="field5" value="someone.1@mail.com" />
+            <select name="field6">
+                <option value="1">One</option>
+                <option value="2" selected>Two</option>
+                <option value="3">Three</option>
+                <option value="4">Four</option>
+            </select>
+        </form>
+
+        <form id="test2">
+            <div>
+                <input type="checkbox" name="check1" />
+                <input type="checkbox" name="check2" checked />
+                <input type="checkbox" name="check3" />
+                <input type="checkbox" name="check4" />
+            </div>
+            <div>
+                <input type="radio" name="radios" value="1" />
+                <input type="radio" name="radios" value="2" />
+                <input type="radio" name="radios" value="3" checked />
+                <input type="radio" name="radios" value="4" />
+            </div>
+        </form>
+        
+        <form id="test3">
+            <input type="text" name="complex[field1]" value="field1_test" />
+            <input type="text" name="complex[field2]" value="field2_test" />
+            <input type="number" name="complex[field3]" value="4" />
+        </form>
+        
+        <form id="test4">
+            <input type="text" name="complex[0][field1]" value="field1_test" />
+            <input type="text" name="complex[0][field2]" value="field2_test" />
+
+            <input type="number" name="complex[1][field1]" value="1" />
+            <input type="text" name="complex[1][field2]" value="field3_test" />
+            
+            <input type="text" name="complex[2][field1]" value="field1_test" />
+        </form>
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js"></script>
+        <script type="text/javascript" src="../src/js/jquery.formify.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                console.log('test 1');
+                console.log($('#test1').formify());
+                console.log('test 2');
+                console.log($('#test2').formify());
+                console.log('test 3');
+                console.log($('#test3').formify());
+                console.log('test 4');
+                console.log($('#test4').formify());
+            });
+        </script>
+    </body>
+</html>

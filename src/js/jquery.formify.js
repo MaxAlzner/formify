@@ -47,6 +47,10 @@
             }
         }
 
+        if (_options.ignoreClass) {
+            _stack = _stack.not(_options.ignoreClass);
+        }
+
         var pairs = [];
         _stack.each(function () {
             var element = $(this),
@@ -107,6 +111,8 @@
 
     $.fn.formify.defaults = {
         targets: 'input, select',
+
+        ignoreClass: '',
 
         ignoreEmpty: false,
 

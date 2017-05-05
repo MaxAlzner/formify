@@ -34,6 +34,19 @@
         var _options = $.extend({}, $.fn.formify.defaults, options),
             _stack = this.find(_options.targets || '');
 
+        function _parser (value, type, name) {
+            switch (type) {
+                case 'number':
+                case 'range':
+                    return _options.parseNumber ? _options.numberParser(value) : value;
+                case 'date':
+                case 'datetime':
+                case 'datetime-local':
+                    return _options.parseDate ? _options.dateParser(value) : value;
+                default: return value;
+            }
+        }
+
         var pairs = [];
         _stack.each(function () {
             var element = $(this),
@@ -76,7 +89,7 @@
             for (var i = 0; i < route.length; i++) {
                 var key = route[i];
                 if (i >= route.length - 1) {
-                    context[key] = _options.parser(pair.value, pair.type, pair.name);
+                    context[key] = _parser(pair.value, pair.type, pair.name);
                 }
                 else {
                     if (context[key] === undefined) {
@@ -96,20 +109,18 @@
 
         ignoreEmpty: false,
 
+        parseNumber: true,
+        parseDate: true,
+
         filter: function (type, name, element) {
-            return type !== 'button';
+            return true;
         },
-        parser: function (value, type, name) {
-            switch (type) {
-                case 'number':
-                case 'range':
-                    return parseInt(value, 10);
-                case 'date':
-                case 'datetime':
-                case 'datetime-local':
-                    return (new Date(value));
-                default: return value;
-            }
+
+        numberParser: function (value) {
+            return parseInt(value, 10);
+        },
+        dateParser: function (value) {
+            return (new Date(value));
         }
     };
 } ($));
